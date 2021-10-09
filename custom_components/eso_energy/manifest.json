@@ -1,6 +1,6 @@
 {
   "codeowners": ["@alfonsasc"],
-  "config_flow": false,
+  "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/alfonsasc/eso_energy/",
   "domain": "eso_energy",
