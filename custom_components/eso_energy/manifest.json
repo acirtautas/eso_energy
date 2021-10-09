@@ -1,0 +1,11 @@
+{
+  "codeowners": ["@alfonsasc"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/alfonsasc/eso_energy/",
+  "domain": "eso_energy",
+  "iot_class": "cloud_polling",
+  "name": "ESO Energy",
+  "requirements": ["bs4==4.10.0"],
+  "version": "1.0.0"
+}

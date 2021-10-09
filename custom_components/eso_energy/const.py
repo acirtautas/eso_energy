@@ -1,0 +1,1 @@
+DOMAIN = "eso_energy"
