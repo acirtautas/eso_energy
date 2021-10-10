@@ -43,7 +43,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
     """Set up the Swedish Electricity Price sensor."""
 
-    sensors = [EsoEnergySensor(hass, 'consumed', config, 'produced'), EsoEnergySensor(hass, 'produced', config, 'consumed')]
+    sensors = [EsoEnergySensor(hass, 'eso_energy_consumed', config, 'consumed'), EsoEnergySensor(hass, 'eso_energy_produced', config, 'produced')]
     async_add_devices(sensors, True)
 
 class EsoEnergySensor(Entity):
