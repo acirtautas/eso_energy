@@ -43,13 +43,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
     """Set up the Swedish Electricity Price sensor."""
 
-    sensors = [EsoEnergySensor(hass, 'consumed', config), EsoEnergySensor(hass, 'produced', config)]
+    sensors = [EsoEnergySensor(hass, 'consumed', config, 'produced'), EsoEnergySensor(hass, 'produced', config, 'consumed')]
     async_add_devices(sensors, True)
 
 class EsoEnergySensor(Entity):
     """Implementation of a ESO Energy sensor."""
 
-    def __init__(self, hass, name, config):
+    def __init__(self, hass, name, config, sensor):
         """Initialize the ESO Energy sensor."""
         self.hass = hass
         self._name = name
@@ -57,6 +57,7 @@ class EsoEnergySensor(Entity):
         self.attrs = {}
         self._unit_of_measurement = 'kWh'
         self.config = config
+        self.sensor = sensor
 
     @property
     def name(self):
@@ -170,10 +171,18 @@ class EsoEnergySensor(Entity):
                     for key, value in daily_dataset[1]['record'].items():
                         daily_consumed += float(value['value'])
 
+                    if self.sensor == 'produced':
+                        self._state = daily_produced
+
+                    if self.sensor == 'consumed':
+                        self._state = daily_consumed
+
+                    self.attrs = {'object_id': object_id}
+
                     # print('{ produced:', daily_produced, ', consumed:', daily_consumed, '}')
 
         except (asyncio.TimeoutError, aiohttp.ClientError):
             _LOGGER.error("Error while accessing ESO")
 
-        self.attrs = [daily_produced, daily_consumed]
-        self._state = "The current values"
+        #self.attrs = []
+        #self._state = "The current values"
